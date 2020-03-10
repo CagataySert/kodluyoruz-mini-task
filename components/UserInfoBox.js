@@ -23,7 +23,6 @@ const UserInfoBox = ({ userData, navigation }) => {
       const randomNumber = generateRandomNumBetweenZeroAndTen();
       try {
         const response = await axios.get(baseUrl + `?results=${randomNumber}`);
-
         setFriendsData(response.data.results);
       } catch (error) {
         console.log(error.message);
@@ -57,16 +56,14 @@ const UserInfoBox = ({ userData, navigation }) => {
         style={styles.friendsLabel}
       >{`Friends (${friendsData.length})`}</Text>
 
-      <View style={styles.friendsSection}>
-        <FlatList
-          data={friendsData}
-          numColumns={4}
-          renderItem={({ item }) => (
-            <FriendBox navigation={navigation} data={item} />
-          )}
-          keyExtractor={item => item.id.value}
-        />
-      </View>
+      <FlatList
+        data={friendsData}
+        numColumns={4}
+        renderItem={({ item }) => (
+          <FriendBox navigation={navigation} data={item} />
+        )}
+        keyExtractor={item => '_' + item.id.value}
+      />
     </View>
   );
 };
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     padding: 10,
     margin: 10,
-    height: height / 2
+    flex: 1
   },
   mainUserRow: {
     flexDirection: 'row',
@@ -100,10 +97,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 18,
     fontWeight: '600'
-  },
-  friendsSection: {
-    flex: 1,
-    flexDirection: 'row'
   },
   friendBox: {
     flex: 1,
